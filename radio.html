@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Online Radio Player</title>
+<style>
+body {
+font-family: Arial, sans-serif;
+}
+h1 {
+text-align: center;
+margin-top: 50px;
+margin-bottom: 30px;
+}
+#radio-player {
+width: 300px;
+margin: 0 auto;
+text-align: center;
+border: 3px solid #ccc;
+padding: 20px;
+border-radius: 10px;
+}
+#radio-stations {
+margin-bottom: 20px;
+}
+#radio-stations select {
+padding: 5px;
+font-size: 16px;
+border: 2px solid #ccc;
+border-radius: 5px;
+}
+#radio-stations label {
+font-size: 18px;
+font-weight: bold;
+margin-right: 10px;
+}
+#radio-players {
+margin-bottom: 20px;
+}
+#radio-players audio {
+width: 100%;
+border: none;
+}
+#next-station {
+background-color: #4CAF50;
+color: white;
+padding: 10px;
+border: none;
+border-radius: 5px;
+font-size: 16px;
+cursor: pointer;
+}
+#next-station:hover {
+background-color: #3E8E41;
+}
+</style>
+</head>
+<body>
+<h1>Онлайн Радио плеър</h1>
+<div id="radio-player">
+<div id="radio-stations">
+<label for="station-select">Избери радио:</label>
+<select id="station-select">
+<option value="http://88.80.96.25:8020/;">Радио ултра перник</option>
+<option value="https://22603.live.streamtheworld.com/RADIO_CITYAAC_H.aac?dist=PREDAVATEL">Радио City</option>
+<option value="https://playerservices.streamtheworld.com/api/livestream-redirect/RADIO_VERONIKAAAC_H.aac?dist=PREDAVATEL">Радио вероника</option>
+<option value="https://bravo.btv.bg/radio/njoy-radio-proxy/index.php">Радио NJOY</option>
+<option value="http://193.108.24.6:8000/zrock">Радио Z-ROCK</option>
+</select>
+</div>
+<div id="radio-players">
+<audio id="radio-player-audio" controls autoplay>
+<source id="radio-player-source" src="https://streaming.radionomy.com/JamendoLounge">
+</audio>
+</div>
+<button id="next-station">Следващо Радио</button>
+</div>
+<script>
+// Initialize variables
+var stationSelect = document.getElementById("station-select");
+var radioPlayerAudio = document.getElementById("radio-player-audio");
+var radioPlayerSource = document.getElementById("radio-player-source");
+var nextStationButton = document.getElementById("next-station");
+var stationIndex = 0;
+var stations = [
+"http://88.80.96.25:8020/;",
+"https://22603.live.streamtheworld.com/RADIO_CITYAAC_H.aac?dist=PREDAVATEL",
+"https://playerservices.streamtheworld.com/api/livestream-redirect/RADIO_VERONIKAAAC_H.aac?dist=PREDAVATEL",
+"https://bravo.btv.bg/radio/njoy-radio-proxy/index.php",
+"http://193.108.24.6:8000/zrock"
+];
+// Set the initial station
+radioPlayerSource.src = stations[stationIndex];
+radioPlayerAudio.load();
+// Play the radio
+radioPlayerAudio.play();
+// Change the station when the user selects a new station
+stationSelect.addEventListener("change", function(event) {
+radioPlayerSource.src = event.target.value;
+radioPlayerAudio.load();
+radioPlayerAudio.play();
+});
+// Change the station when the user clicks the next station button
+nextStationButton.addEventListener("click", function() {
+stationIndex = (stationIndex + 1) % stations.length;
+radioPlayerSource.src = stations[stationIndex];
+radioPlayerAudio.load();
+radioPlayerAudio.play();
+stationSelect.value = stations[stationIndex];
+});
+</script>
+</body>
+</html>
